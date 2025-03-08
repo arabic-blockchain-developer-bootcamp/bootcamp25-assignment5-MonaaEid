@@ -2,6 +2,19 @@
 pragma solidity ^0.8.0;
 
 contract Assignment5 {
+    uint public counter;
+
+    bool public isActive;
+
+    mapping(address => string) public userNames;
+
+    struct User {
+        uint id;
+        string name;
+    }
+
+    string[] public users;
+
     // 1. Declare a public unsigned integer variable called `counter`
 
     // 2. Declare a public boolean variable called `isActive`
@@ -15,7 +28,7 @@ contract Assignment5 {
     // Constructor
     // Initialize `isActive` to true
     constructor() {
-        // Fill in the logic
+        isActive = true;
 
     }
 
@@ -23,18 +36,22 @@ contract Assignment5 {
     // This function should:
     // - Be external
     // - Use a for loop to increment `counter` by 1 for 5 iterations
-    function incrementCounter() {
-        // Fill in the logic
-      
+    function incrementCounter() external {
+        for (uint256 i = 0; i < 5; i++) {
+            counter += 1;
+        }
     }
 
     // Function to toggle `isActive`
     // This function should:
     // - Be public
     // - Use an if statement to toggle `isActive` between true and false
-    function toggleActive() {
-        // Fill in the logic
-        
+    function toggleActive() public {
+        if (isActive) {
+            isActive = false;
+        } else {
+            isActive = true;
+        }
     }
 
     // Function to add a user
@@ -45,8 +62,12 @@ contract Assignment5 {
         // The memory keyword will be explained later
     // - Add a new user to the `users` array
     // - Update the `userNames` mapping with the address and name
-    function addUser() {
-        // Fill in the logic
+    function addUser(uint id, string memory name, address userAddress) public {
+    
+        User memory newUser = User(id, name);
+        users.push(name);
+        userNames[userAddress] = name;
+
 
         // Hint: you have to use the keyword `memory` to define the struct
             // For example: User memory user
@@ -57,9 +78,8 @@ contract Assignment5 {
     // Function to get the total number of users
     // This function should:
     // - Be public and view
-    // - Return the length of the `users` array
-    function getUserCount() {
-        // Fill in the logic
-
+    function getUserCount() public view returns(uint userLength) {
+        return users.length;
     }
-}
+    }
+
